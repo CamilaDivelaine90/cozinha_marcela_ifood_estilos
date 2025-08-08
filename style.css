@@ -232,3 +232,25 @@ button.finalizar:active {
   transform: translateY(0px);
   box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
 }
+/* Tamanho padrão (desktop) */
+.item img {
+  width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px; /* opcional, para cantos arredondados */
+}
+
+/* Tablets e celulares */
+@media (max-width: 768px) {
+  .item img {
+    width: 140px;
+  }
+}
+
+/* Celulares pequenos */
+@media (max-width: 480px) {
+  .item img {
+    width: 100px;
+  }
+}
