@@ -46,7 +46,7 @@ function finalizarPedido() {
   mensagem += `\n💰 *Total:* R$ ${document.getElementById('total').textContent}`;
   mensagem += `\n📍 *Endereço:* ${endereco}`;
 
-  let numeroWhatsApp = '5599999999999'; // coloque seu número aqui
+  let numeroWhatsApp = '5511942018395'; // coloque seu número aqui
   let url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
 
   window.open(url, '_blank');
