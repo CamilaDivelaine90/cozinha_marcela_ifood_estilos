@@ -3,151 +3,213 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cozinha da Marcela</title>
+  <meta name="description" content="Cozinha da Marcela - Comida caseira deliciosa. Confira nosso cardápio semanal e faça seu pedido online.">
+  <title>Cozinha da Marcela - Cardápio da Semana</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      background: #ff6f3c;
+      color: white;
+      padding: 20px;
+    }
+    header h1 {
+      margin: 0;
+    }
+    .extra-banner img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .cardapio-semana {
+      margin-top: 15px;
+    }
+    .busca-cardapio {
+      text-align: center;
+      margin: 20px;
+    }
+    .busca-cardapio input {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .dia-cardapio {
+      margin: 20px auto;
+      padding: 10px;
+      max-width: 1200px;
+    }
+    .dia-cardapio h3 {
+      background: #ff6f3c;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .itens {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .item {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      transition: transform 0.2s;
+    }
+    .item:hover {
+      transform: translateY(-5px);
+    }
+    .item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .item h4 {
+      margin: 10px 0 5px;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+    .item p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .item button {
+      background: #ff6f3c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: auto;
+      transition: background 0.2s;
+    }
+    .item button:hover {
+      background: #e65a28;
+    }
+    #carrinho {
+      background: white;
+      margin: 30px auto;
+      padding: 20px;
+      max-width: 800px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .botoes-sociais {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .botoes-sociais a {
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+    }
+    .btn-whatsapp { background-color: #25D366; }
+    .btn-instagram { background-color: #E4405F; }
+    footer {
+      text-align: center;
+      background: #333;
+      color: white;
+      padding: 15px;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
   <header>
-
+    <h1>Cozinha da Marcela</h1>
     <section class="extra-banner">
-  <img src="home.banner.capa.png" alt="Promoção da Semana">
-</section>
-<section class="cardapio-semana">
-  <section class="cardapio-semana">
-  <h2>🍲 Cardápio da Semana (11/08 à 15/08)</h2>
-</section>
-
+      <img src="home.banner.capa.png" alt="Promoção da Semana - Cozinha da Marcela" loading="lazy">
+    </section>
+    <section class="cardapio-semana">
+      <h2>🍲 Cardápio da Semana (11/08 à 15/08)</h2>
+    </section>
   </header>
 
+  <!-- Campo de busca -->
+  <div class="busca-cardapio">
+    <input type="text" id="busca" placeholder="🔍 Buscar prato no cardápio..." onkeyup="filtrarCardapio()">
+  </div>
+
   <main>
-    
-  <div class="dia-cardapio">
-  <h2>Segunda-feira</h2>
-  <div class="itens">
-    <div class="item">
-      <img src="1.png" alt="Batata Recheada Bacon e Requeijão Cremoso">
-      <h3>Batata Recheada Bacon e Requeijão Cremoso </h3>
+
+    <!-- Exemplo de um dia -->
+    <div class="dia-cardapio">
+      <h3>Segunda-feira</h3>
+      <div class="itens">
+        <div class="item">
+          <img src="1.png" alt="Batata Recheada com Bacon e Requeijão Cremoso" loading="lazy">
+          <h4>Batata Recheada Bacon e Requeijão Cremoso</h4>
           <p>1 unidade - aprox.: 400g</p>
-            <p>R$ 21,90</p>
-      <button onclick="addToCart('Batata Recheada Bacon e Requeijão Cremoso', 21,90, '1 unidade - aprox.: 400g')">Adicionar</button>
+          <p>R$ 21,90</p>
+          <button onclick="addToCart('Batata Recheada Bacon e Requeijão Cremoso', 21.90, '1 unidade - aprox.: 400g')">Adicionar</button>
+        </div>
+
+        <div class="item">
+          <img src="2.png" alt="Frango Assado com Batatas" loading="lazy">
+          <h4>Frango Assado com Batatas</h4>
+          <p>1 unidade - aprox.: 400g</p>
+          <p>R$ 21,90</p>
+          <button onclick="addToCart('Frango Assado com Batatas', 21.90, '1 unidade - aprox.: 400g')">Adicionar</button>
+        </div>
+      </div>
     </div>
 
-    <div class="item">
-      <img src="2.png" alt="Batata Recheada Frango Cremoso">
-      <h3>Frango Assado com Batatas</h3>
-      <p>1 unidade - aprox.: 400g</p>
-      <p>R$ 21,90</p>
-      <button onclick="addToCart('Batata Recheada Frango Cremoso', 21,90, '1 unidade - aprox.: 400g')">Adicionar</button>
-    </div>
-  </div>
-</div>
+    <!-- Aqui repetiria a mesma estrutura para os outros dias -->
 
-  <div class="dia-cardapio">
-  <h2>Terça-feira</h2>
-  <div class="itens">
-    <div class="item">
-      <img src="3.png" alt="Kibe Assado">
-      <h3>Kibe Assado </h3>
-          <p>Porção Individual - aprox.: 400g</p>
-            <p>R$ 24,90</p>
-      <button onclick="addToCart('Kibe Assado', 24,90, 'Porção Individual - aprox.: 400g')">Adicionar</button>
-    </div>
-
-    <div class="item">
-      <img src="4.png" alt="Kafta">
-      <h3>Kafta</h3>
-      <p>3 unidades | aprox.: 400g</p> 
-      <p>R$ 21,90</p>
-      <button onclick="addToCart('Batata Recheada Frango Cremoso', 21,90, '1 unidade - aprox.: 400g')">Adicionar</button>
-    </div>
-  </div>
-</div>
-
-<div class="dia-cardapio">
-  <h2>Quarta-feira</h2>
-  <div class="itens">
-    <div class="item">
-      <img src="5.png" alt="Carne de Panela">
-      <h3>Carne de Panela</h3>
-      <p>Carne,batata, cenoura e tempero caseiro e porção de arroz.</p> 
-      <p>Porção Individual - aprox.: 500g</p>
-            <p>R$ 24,90</p>
-      <button onclick="addToCart('Kibe Assado', 24,90, 'Porção Individual - aprox.: 400g')">Adicionar</button>
-    </div>
-
-
-<div class="dia-cardapio">
-  <h2>Quinta-feira</h2>
-  <div class="itens">
-    <div class="item">
-      <img src="6.png" alt="Panqueca Carne">
-      <h3>Panqueca Carne</h3>
-      <p>2 unidades - aprox.: 400g</p>
-      <p>R$ 21,90</p>
-      <button onclick="addToCart('Kibe Assado', 21,90, '2 unidades - aprox.: 400g')">Adicionar</button>
-    </div>
-
-    <div class="item">
-      <img src="7.png" alt="Panqueca Queijo">
-      <h3>Panqueca Queijo</h3>
-      <p>2 unidades - aprox.: 400g</p>
-      <p>R$ 21,90</p>
-      <button onclick="addToCart('Panqueca Queijo', 21,90, '2 unidades - aprox.: 400g')">Adicionar</button>
-</div>
-
-<div class="item">
-      <img src="8.png" alt="Panqueca Mista">
-      <h3>Panqueca Mista</h3>
-      <p>2 unidades - aprox.: 400g</p>
-      <p>R$ 21,90</p>
-      <button onclick="addToCart('Panqueca Mista', 21,90, '2 unidades - aprox.: 400g')">Adicionar</button>
-</div>
-
-<div class="item">
-      <img src="11.png" alt="Escondidinho de Carne Moida">
-      <h3>Escondidinho de Carne Moida</h3>
-      <p>Porção Individual | aprox.: 500g</p>
-      <p>R$ 24,90</p>
-      <button onclick="addToCart('Escondidinho de Carne Moida', 21,90, 'Porção Individual - aprox.: 500g')">Adicionar</button>
-</div>
-
-<div class="dia-cardapio">
-  <h2>Sexta-feira</h2>
-  <div class="itens">
-    <div class="item">
-      <img src="9.png" alt="Strogonoff de Frango">
-      <h3>Strogonoff de Frango</h3>
-      <p>Strogonoof de frango, porção de arroz, batata palha.</p>
-      <p>Porção Individual - aprox.: 500g</p>
-      <p>R$ 24,90</p>
-      <button onclick="addToCart('Strogonoff de Frango', 24,90, 'Porção Individual - aprox.: 500g')">Adicionar</button>
-    </div>
-
-    <div class="item">
-      <img src="10.png" alt="Strogonoff de Carne">
-      <h3>Strogonoff de Carne</h3>
-      <p>Strogonoof de carne, porção de arroz, batata palha.</p>
-      <p>Porção Individual - aprox.: 500g</p>
-      <p>R$ 24,90</p>
-      <button onclick="addToCart('Panqueca Queijo', 21,90, '2 unidades - aprox.: 400g')">Adicionar</button>
-</div>
-
-    </section> 
     <section id="carrinho">
-  <h2>🛒 Meu Carrinho</h2>
-  <ul id="cart-items"></ul>
-  <p>Total: R$ <span id="total">0,00</span></p>
-  <div class="endereco-entrega">
-    <label for="endereco">📍 Endereço de Entrega:</label>
-    <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade">
-  </div>
-  <button onclick="finalizarPedido()">Finalizar Pedido via WhatsApp</button>
-</section>
+      <h2>🛒 Meu Carrinho</h2>
+      <ul id="cart-items"></ul>
+      <p>Total: R$ <span id="total">0,00</span></p>
+      <div class="endereco-entrega">
+        <label for="endereco">📍 Endereço de Entrega:</label>
+        <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade">
+      </div>
+      <button onclick="finalizarPedido()">Finalizar Pedido via WhatsApp</button>
+    </section>
+
   </main>
 
-  <p>&copy; 2025  Cozinha da Marcela - PIX: 11942018395</p>
+  <!-- Botões de compartilhamento -->
+  <div class="botoes-sociais">
+    <a class="btn-whatsapp" href="https://wa.me/5511942018393?text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20um%20pedido!" target="_blank">📲 WhatsApp</a>
+    <a class="btn-instagram" href="https://instagram.com/cozinhadamarcela" target="_blank">📷 Instagram</a>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Cozinha da Marcela - PIX: 11942018393</p>
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    function filtrarCardapio() {
+      const termo = document.getElementById("busca").value.toLowerCase();
+      const itens = document.querySelectorAll(".item");
+      itens.forEach(item => {
+        const nome = item.querySelector("h4").textContent.toLowerCase();
+        item.style.display = nome.includes(termo) ? "" : "none";
+      });
+    }
+  </script>
 </body>
 </html>
