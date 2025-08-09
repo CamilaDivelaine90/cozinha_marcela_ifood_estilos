@@ -1,0 +1,36 @@
+/* 🎨 Variáveis de cores para fácil manutenção */
+:root {
+  --laranja: #d35400;
+  --laranja-claro: #e67e22;
+  --verde: #27ae60;
+  --verde-escuro: #219150;
+  --fundo-claro: #fff8f0;
+  --texto: #333;
+}
+
+/* 🌐 Estilos globais */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--fundo-claro);
+  color: var(--texto);
+  margin: 0;
+  line-height: 1.6;
+}
+
+header, footer {
+  background-color: transparent;
+  color: var(--texto);
+  text-align: center;
+  padding: 1rem;
+}
+
+footer {
+  background-color: var(--laranja);
+  color: white;
+  margin-top: 2rem;
+}
+
+.hero img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover
