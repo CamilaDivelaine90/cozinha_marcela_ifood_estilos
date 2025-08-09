@@ -134,3 +134,34 @@ footer {
     border-radius: 8px;
   
 }
+.menu-semana {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dia-semana h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.imagens-dia {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.imagens-dia img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Ajuste para mobile */
+@media (max-width: 600px) {
+  .imagens-dia {
+    grid-template-columns: repeat(2, 1fr); /* 2 por linha no celular */
+  }
+}
