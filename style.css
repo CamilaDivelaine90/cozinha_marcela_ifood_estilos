@@ -74,7 +74,6 @@ footer {
     background-color: #f2f2f2;
     transform: translateY(-2px);
 }
-/* Estilo padrão (desktop) — já existente no seu site */
 
 /* Ajustes para celular */
 @media screen and (max-width: 768px) {
@@ -118,7 +117,6 @@ footer {
     height: auto;
     border-radius: 8px;
   }
-}
 /* Ajuste de imagens para mobile */
 @media screen and (max-width: 768px) {
   .hero img {
@@ -134,5 +132,5 @@ footer {
     display: block;
     margin: 0 auto; /* centraliza */
     border-radius: 8px;
-  }
+  
 }
