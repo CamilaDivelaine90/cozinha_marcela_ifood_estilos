@@ -119,3 +119,20 @@ footer {
     border-radius: 8px;
   }
 }
+/* Ajuste de imagens para mobile */
+@media screen and (max-width: 768px) {
+  .hero img {
+    width: 100%;
+    max-height: 250px; /* altura menor no celular */
+    object-fit: cover;
+  }
+
+  .cardapio-item img {
+    width: 80%; /* reduz para 80% da largura */
+    max-width: 250px; /* evita imagens grandes demais */
+    height: auto;
+    display: block;
+    margin: 0 auto; /* centraliza */
+    border-radius: 8px;
+  }
+}
