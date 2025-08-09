@@ -74,3 +74,48 @@ footer {
     background-color: #f2f2f2;
     transform: translateY(-2px);
 }
+/* Estilo padrão (desktop) — já existente no seu site */
+
+/* Ajustes para celular */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+
+  /* Carrinho */
+  #cart-items li {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Botões */
+  .btn-finalizar,
+  .btn-pagamento {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+    margin: 5px 0;
+  }
+
+  /* Inputs */
+  input, textarea {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  /* Imagens do cardápio */
+  .cardapio-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+}
