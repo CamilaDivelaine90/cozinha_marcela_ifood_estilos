@@ -271,7 +271,23 @@
           <p>R$ 24,90</p>
           <button onclick="addToCart('Strogonoff de Carne', 24.90, 'Aprox.: 500g')">Adicionar</button>
     </div>
-          <section class="cardapio-semana">
+    </div>
+    </div>
+         
+    <section id="carrinho">
+      <h2>🛒 Meu Carrinho</h2>
+      <ul id="cart-items"></ul>
+      <p>Total: R$ <span id="total">0,00</span></p>
+      <div class="endereco-entrega">
+        <label for="endereco">📍 Endereço de Entrega:</label>
+        <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade">
+      </div>
+      <button onclick="finalizarPedido()">Finalizar Pedido via WhatsApp</button>
+    </section>
+    
+  <!-- Formas de pagamento Pix -->
+    
+  <section class="cardapio-semana">
   <h2>Formas de Pagamento:</h2>
   <h4>PIX: 11942018395</h4>
   
@@ -295,25 +311,10 @@
   background-color: #e65a28;
 }
 </style>
+
+    <!-- Carrinho -->
+
     
-
-    <section class="cardapio-semana">
-      <h2>Formas de Pagamento:</h2>
-      <h4>PIX: 11942018395</h4>
-    </section>
-
-    <!-- Aqui repetiria a mesma estrutura para os outros dias -->
-
-    <section id="carrinho">
-      <h2>🛒 Meu Carrinho</h2>
-      <ul id="cart-items"></ul>
-      <p>Total: R$ <span id="total">0,00</span></p>
-      <div class="endereco-entrega">
-        <label for="endereco">📍 Endereço de Entrega:</label>
-        <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade">
-      </div>
-      <button onclick="finalizarPedido()">Finalizar Pedido via WhatsApp</button>
-    </section>
 
   </main>
 
