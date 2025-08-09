@@ -68,3 +68,4 @@ function gerarMensagemPedido() {
 
   mensagem += `%0A💰 *Total:* R$ ${total.toFixed(2).replace('.', ',')}`;
   if (endereco.trim()
+}
