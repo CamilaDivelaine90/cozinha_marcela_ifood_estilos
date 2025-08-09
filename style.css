@@ -36,20 +36,40 @@ footer {
   object-fit: cover
 
 }
-  #btn-whatsapp {
-  background-color: #25D366; /* Verde WhatsApp */
+/* 🛒 Estilos do menu */
+/* Botão WhatsApp */
+.btn-whatsapp {
+  background-color: #25D366;
   color: white;
+  text-decoration: none;
+  padding: 12px 24px;
   font-size: 1.1rem;
   font-weight: bold;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 10px; /* Pontas arredondadas */
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
-#btn-whatsapp:hover {
-  background-color: #1ebe57; /* Verde mais escuro ao passar o mouse */
-  transform: translateY(-2px); /* Efeito de "subir" */
+.btn-whatsapp:hover {
+  background-color: #1ebe5d;
+  transform: translateY(-2px);
+}
+
+/* Botão Cartão de Crédito */
+.btn-cartao {
+  background-color: white;
+  color: #333;
+  border: 2px solid #333;
+  text-decoration: none;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.btn-cartao:hover {
+  background-color: #f2f2f2;
+  transform: translateY(-2px);
 }
