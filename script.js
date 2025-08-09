@@ -83,3 +83,27 @@ function finalizarPedido() {
 
   window.open(url, '_blank');
 }
+// Função para montar o texto do pedido
+function gerarMensagemPedido() {
+    let mensagem = "🍽️ *Pedido Cozinha da Marcela*%0A%0A";
+    let total = 0;
+
+    cart.forEach(item => {
+        mensagem += `• ${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}%0A`;
+        total += item.price * item.quantity;
+    });
+
+    mensagem += `%0A💰 *Total:* R$ ${total.toFixed(2).replace('.', ',')}`;
+    mensagem += `%0A%0A📎 Envie seu comprovante de pagamento aqui.`;
+
+    return mensagem;
+}
+
+// Ação do botão WhatsApp
+document.getElementById("btn-finalizar-whatsapp").addEventListener("click", function () {
+    let numeroWhatsApp = "55SEUNUMEROAQUI"; // coloque DDD + número
+    let mensagem = gerarMensagemPedido();
+    let url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+    this.href = url;
+});
+
