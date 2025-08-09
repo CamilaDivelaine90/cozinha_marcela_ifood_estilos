@@ -175,41 +175,38 @@ footer {
   }
 }
 
-.menu-container {
+/* Ajuste geral do bloco do dia */
+.menu-dia {
+  margin-bottom: 2rem;
+}
+
+/* Galeria de imagens */
+.galeria-dia {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
+  flex-wrap: wrap; /* quebra linha no celular */
+  gap: 10px; /* espaço entre imagens */
+  justify-content: center; /* centraliza */
 }
 
-.menu-item {
-  flex: 1 1 200px; /* largura mínima por item */
-  max-width: 300px;
-  text-align: center;
-}
-
-.menu-item img {
-  width: 100%;       /* ocupa toda a largura disponível do card */
-  height: auto;      /* mantém proporção */
-  object-fit: cover;
+/* Imagens responsivas */
+.galeria-dia img {
+  width: 100%;
+  max-width: 200px; /* tamanho máximo no desktop */
+  height: auto;
   border-radius: 8px;
-  transition: transform 0.2s ease;
+  object-fit: cover;
 }
 
-.menu-item img:hover {
-  transform: scale(1.05);
-}
-
-/* Ajuste para tablets */
-@media (max-width: 768px) {
-  .menu-item {
-    flex: 1 1 45%; /* dois por linha */
+/* No celular, as imagens ocupam metade da largura */
+@media (max-width: 600px) {
+  .galeria-dia img {
+    max-width: 48%;
   }
 }
 
-/* Ajuste para celulares */
-@media (max-width: 480px) {
-  .menu-item {
-    flex: 1 1 100%; /* um por linha */
+/* Em telas muito pequenas, ocupam a largura total */
+@media (max-width: 400px) {
+  .galeria-dia img {
+    max-width: 100%;
   }
 }
