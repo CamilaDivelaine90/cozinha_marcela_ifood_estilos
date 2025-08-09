@@ -175,3 +175,41 @@ footer {
   }
 }
 
+.menu-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.menu-item {
+  flex: 1 1 200px; /* largura mínima por item */
+  max-width: 300px;
+  text-align: center;
+}
+
+.menu-item img {
+  width: 100%;       /* ocupa toda a largura disponível do card */
+  height: auto;      /* mantém proporção */
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.menu-item img:hover {
+  transform: scale(1.05);
+}
+
+/* Ajuste para tablets */
+@media (max-width: 768px) {
+  .menu-item {
+    flex: 1 1 45%; /* dois por linha */
+  }
+}
+
+/* Ajuste para celulares */
+@media (max-width: 480px) {
+  .menu-item {
+    flex: 1 1 100%; /* um por linha */
+  }
+}
