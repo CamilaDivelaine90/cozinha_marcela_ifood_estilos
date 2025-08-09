@@ -1,17 +1,14 @@
 let cart = [];
 
+// Adicionar item ao carrinho
 function addToCart(name, price, description) {
-  let precoNumber = parseFloat(price.toString().replace(',', '.')); // Trata preço com vírgula
+  let precoNumber = parseFloat(price.toString().replace(/\./g, '').replace(',', '.')); 
 
-  // Verifica se o item já existe no carrinho
   let existingItem = cart.find(item => item.name === name);
-
   if (existingItem) {
-    // Se o item já existir, aumenta a quantidade e atualiza o total
     existingItem.quantity++;
     existingItem.totalPrice = existingItem.quantity * precoNumber;
   } else {
-    // Caso o item não exista, adiciona ao carrinho
     cart.push({
       name,
       description,
@@ -24,6 +21,7 @@ function addToCart(name, price, description) {
   updateCart();
 }
 
+// Atualizar lista e total do carrinho
 function updateCart() {
   let cartItems = document.getElementById('cart-items');
   let total = 0;
@@ -43,67 +41,30 @@ function updateCart() {
   document.getElementById('total').textContent = total.toFixed(2).replace('.', ',');
 }
 
+// Alterar quantidade de um item
 function alterarQuantidade(name, change) {
   let item = cart.find(i => i.name === name);
   if (item) {
     item.quantity += change;
     if (item.quantity <= 0) {
-      // Remove item do carrinho se a quantidade for 0 ou negativa
       cart = cart.filter(i => i.name !== name);
     } else {
-      // Atualiza o preço total se a quantidade mudar
       item.totalPrice = item.quantity * item.price;
     }
     updateCart();
   }
 }
 
-function finalizarPedido() {
-  if (cart.length === 0) {
-    alert("🛒 Seu carrinho está vazio. Adicione itens antes de finalizar o pedido.");
-    return;
-  }
+// Gerar mensagem do pedido
+function gerarMensagemPedido() {
+  let endereco = document.getElementById('endereco')?.value || '';
+  let mensagem = "🍽️ *Pedido Cozinha da Marcela*%0A%0A";
+  let total = 0;
 
-  let endereco = document.getElementById('endereco').value;
-  if (!endereco.trim()) {
-    alert("📍 Por favor, insira o endereço de entrega.");
-    return;
-  }
-
-  let mensagem = '🍲 *Meu Pedido* 🍲\n\n';
   cart.forEach(item => {
-    mensagem += `${item.quantity}x ${item.name} - R$ ${item.totalPrice.toFixed(2).replace('.', ',')}\n`;
+    mensagem += `• ${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}%0A`;
+    total += item.price * item.quantity;
   });
 
-  mensagem += `\n💰 *Total:* R$ ${document.getElementById('total').textContent}`;
-  mensagem += `\n📍 *Endereço:* ${endereco}`;
-
-  let numeroWhatsApp = '5511942018395'; // Número do WhatsApp
-  let url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
-
-  window.open(url, '_blank');
-}
-// Função para montar o texto do pedido
-function gerarMensagemPedido() {
-    let mensagem = "🍽️ *Pedido Cozinha da Marcela*%0A%0A";
-    let total = 0;
-
-    cart.forEach(item => {
-        mensagem += `• ${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}%0A`;
-        total += item.price * item.quantity;
-    });
-
-    mensagem += `%0A💰 *Total:* R$ ${total.toFixed(2).replace('.', ',')}`;
-    mensagem += `%0A%0A📎 Envie seu comprovante de pagamento aqui.`;
-
-    return mensagem;
-}
-
-// Ação do botão WhatsApp
-document.getElementById("btn-finalizar-whatsapp").addEventListener("click", function () {
-    let numeroWhatsApp = "55SEUNUMEROAQUI"; // coloque DDD + número
-    let mensagem = gerarMensagemPedido();
-    let url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
-    this.href = url;
-});
-
+  mensagem += `%0A💰 *Total:* R$ ${total.toFixed(2).replace('.', ',')}`;
+  if (endereco.trim()

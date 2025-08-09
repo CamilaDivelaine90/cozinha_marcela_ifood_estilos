@@ -35,7 +35,7 @@ footer {
   max-height: 400px;
   object-fit: cover
 
-}
+/* Botão WhatsApp */
 .btn-whatsapp {
     display: inline-block;
     background-color: #25d366;
@@ -46,29 +46,31 @@ footer {
     border-radius: 10px;
     text-decoration: none;
     text-align: center;
-    transition: background 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, background 0.3s ease;
 }
 
 .btn-whatsapp:hover {
     background-color: #1ebc57;
+    transform: translateY(-2px);
 }
-
 
 /* Botão Cartão de Crédito */
 .btn-cartao {
-  background-color: white;
-  color: #333;
-  border: 2px solid #333;
-  text-decoration: none;
-  padding: 12px 24px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  transition: transform 0.2s ease, background-color 0.3s ease;
+    display: inline-block;
+    background-color: white;
+    color: #333;
+    border: 2px solid #333;
+    text-decoration: none;
+    padding: 15px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 .btn-cartao:hover {
-  background-color: #f2f2f2;
-  transform: translateY(-2px);
+    background-color: #f2f2f2;
+    transform: translateY(-2px);
 }
