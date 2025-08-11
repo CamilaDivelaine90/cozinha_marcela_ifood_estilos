@@ -98,17 +98,18 @@
 <nav>
   <a href="#cardapio">🍽 Cardápio</a>
   <a href="#carrinho">🛒 Carrinho</a>
-  <a href="#contato">📞 Contato</a>
+  <a href="#contato">📞Contato</a>
 </nav>
 <div class="spacer"></div>
 
 <!-- CARROSSEL PRATOS DO DIA -->
 <section id="pratos-do-dia" aria-label="Pratos do dia">
   <div style="max-width:1000px;margin:auto">
-    <h2 style="margin:0 0 8px 0;font-size:20px">🥘 Pratos do Dia</h2>
+    <h2 style="margin:0 0 8px 0;font-size:20px">🥘 Pratos do Dia - Terça-feira</h2>
 
     <div class="carousel-viewport" style="overflow:hidden;border-radius:10px">
       <div class="carousel-wrap">
+        
         <!-- Slide 1: Kibe Assado -->
         <div class="slide" data-name="Kibe Assado" data-price="24.90">
           <div class="info">
@@ -116,17 +117,17 @@
             <p>Porção individual (400g).</p>
             <button onclick="addToCart('Kibe Assado',24.90,)">🛒 Adicionar ao Carrinho</button>
           </div>
-          <img src="2.png" alt="Kibe Assado">
+          <img src="3.png" alt="Kibe Assado">
         </div>
 
         <!-- Slide 2: Kafta -->
-        <div class="slide" data-name="Kafta" data-price="26.9">
+        <div class="slide" data-name="Kafta" data-price="26.90">
           <div class="info">
             <h3>Kafta — R$ 26,90</h3>
             <p>3 unidades (400g).</p>
             <button onclick="addToCart('Kafta',24.90,)">🛒 Adicionar ao Carrinho</button>
           </div>
-          <img src="2.png" alt="Kafta">
+          <img src="4.png" alt="Kafta">
         </div>
       </div>
     </div>
@@ -150,11 +151,21 @@
   <h2 style="margin-top:12px">Cardápio da Semana</h2>
   <div class="lista" id="lista">
     <!-- Exemplo: repita/edite os itens conforme precisar -->
-    <div class="card" data-name="Batata Recheada Bacon e Requeijão Cremoso" data-desc="Batata, mussarela, bacon, requeijão" data-price="21.9">
+    <div class="card" data-name="Batata Recheada Bacon e Requeijão Cremoso" data-desc="Batata, mussarela, bacon, requeijão" data-price="21.90">
       <img src="https://source.unsplash.com/featured/?stuffed-potato" alt="Batata Recheada">
       <div class="meta">
         <h4>Batata Recheada Bacon e Requeijão Cremoso</h4>
-        <p>Batata, mussarela, bacon, requeijão — 1 unidade (~400g)</p>
+        <p>Batata, mussarela, bacon, requeijão — 1 unidade (Aprox.: 400g)</p>
+        <div class="price">R$ 21,90</div>
+        <button onclick="addToCart('Batata Recheada Bacon e Requeijão Cremoso',21.90,'1 unidade - aprox. 400g')">Adicionar</button>
+      </div>
+    </div>
+
+    <div class="card" data-name="Batata Recheada Frango Cremoso" data-desc="Batata, mussarela, frango Cremoso" data-price="21.90">
+      <img src="https://source.unsplash.com/featured/?stuffed-potato" alt="Batata Recheada">
+      <div class="meta">
+        <h4>Batata Recheada Frango Cremoso</h4>
+        <p>Batata, mussarela, Frango Cremoso — 1 unidade (Aprox.: 400g)</p>
         <div class="price">R$ 21,90</div>
         <button onclick="addToCart('Batata Recheada Bacon e Requeijão Cremoso',21.90,'1 unidade - aprox. 400g')">Adicionar</button>
       </div>
@@ -164,7 +175,7 @@
       <img src="https://source.unsplash.com/featured/?kibbeh" alt="Kibe Assado">
       <div class="meta">
         <h4>Kibe Assado</h4>
-        <p>Recheado com carne moída e especiarias — Porção individual (~400g)</p>
+        <p>Recheado com carne moída e especiarias — Porção individual (Aprox.: 400g)</p>
         <div class="price">R$ 24,90</div>
         <button onclick="addToCart('Kibe Assado',24.90,'Porção individual - aprox.: 400g')">Adicionar</button>
       </div>
