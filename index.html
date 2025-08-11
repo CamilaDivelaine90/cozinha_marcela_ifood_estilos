@@ -3,75 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cozinha da Marcela - Carrinho</title>
+<title>Cozinha da Marcela - Cardápio</title>
 <style>
     body {
         font-family: Arial, sans-serif;
         background-color: #fff8f0;
         color: #333;
-        text-align: center;
         margin: 0;
-        padding: 20px;
-    }
-    h1 {
-        color: #d35400;
-    }
-    ul {
-        list-style: none;
         padding: 0;
     }
-    li {
+
+    h1 {
+        text-align: center;
+        padding: 15px;
+        color: #d35400;
+    }
+
+    .dia-semana {
+        padding: 20px;
+    }
+
+    .dia-semana h2 {
+        border-left: 5px solid #d35400;
+        padding-left: 10px;
+        margin-bottom: 15px;
+        color: #d35400;
+    }
+
+    .itens-dia {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        flex: 1 1 calc(25% - 15px);
+        display: flex;
+        flex-direction: column;
+        min-width: 250px;
+    }
+
+    .card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .card-content {
+        padding: 10px;
+        flex-grow: 1;
+    }
+
+    .card-content h4 {
         margin: 5px 0;
+        font-size: 18px;
     }
-    button, .btn-finalizar, .btn-pagamento {
-        display: inline-block;
-        padding: 12px 20px;
-        margin: 10px 5px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
+
+    .card-content p {
+        margin: 3px 0;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .preco {
+        font-weight: bold;
         font-size: 16px;
-        text-decoration: none;
-        transition: 0.3s;
+        margin-top: 5px;
     }
-    .btn-finalizar {
+
+    .btn-add {
         background-color: #25D366;
         color: white;
+        padding: 10px;
+        text-align: center;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 0.3s;
+        border-radius: 0 0 10px 10px;
     }
-    .btn-finalizar:hover {
+
+    .btn-add:hover {
         background-color: #1ebe5d;
     }
-    .btn-pagamento {
-        background-color: white;
-        color: #333;
-        border: 2px solid #ccc;
+
+    @media (max-width: 768px) {
+        .card {
+            flex: 1 1 calc(50% - 15px);
+        }
     }
-    .btn-pagamento:hover {
-        background-color: #f5f5f5;
-    }
-    input {
-        padding: 8px;
-        width: 80%;
-        margin: 10px 0;
-        border-radius: 5px;
-        border: 1px solid #ccc;
+
+    @media (max-width: 480px) {
+        .card {
+            flex: 1 1 100%;
+        }
     }
 </style>
 </head>
 <body>
-  <header>
-    <section class="extra-banner">
-      <img src="home.banner.capa.png" alt="Promoção da Semana - Cozinha da Marcela" loading="lazy">
-    </section>
-    
-  </header>
 
-  <!-- Campo de busca -->
-  <div class="busca-cardapio">
-    <input type="text" id="busca" placeholder="🔍 Buscar prato no cardápio..." onkeyup="filtrarCardapio()">
-  </div>
+<h1>🍽 Cardápio da Semana - Cozinha da Marcela</h1>
 
-  <!-- SEGUNDA -->
+<!-- SEGUNDA -->
 <section class="dia-semana">
     <h2>Segunda-feira</h2>
     <div class="itens-dia">
@@ -153,35 +191,64 @@
             <button class="btn-add" onclick="addToCart('Strogonoff de Frango', 24.90, 'Aprox.: 500g')">Adicionar</button>
         </div>
     </div>
+<!-- CARRINHO -->
+<section id="carrinho" style="max-width: 600px; margin: 30px auto; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); overflow: hidden;">
+  <header style="background-color: #d35400; color: white; padding: 15px; font-size: 20px; font-weight: bold; text-align: center;">
+    🛒 Carrinho de Compras
+  </header>
 
-<h1>🛒 Carrinho de Compras</h1>
+  <ul id="cart-items" style="list-style: none; margin: 0; padding: 0;">
+    <!-- Itens adicionados via JS -->
+  </ul>
 
-<ul id="cart-items"></ul>
-<p><strong>Total: R$ <span id="total">0,00</span></strong></p>
+  <div style="padding: 15px; border-top: 1px solid #eee; display: flex; justify-content: space-between; font-size: 18px; font-weight: bold;">
+    <span>Total:</span>
+    <span id="total">R$ 0,00</span>
+  </div>
 
-<input type="text" id="endereco" placeholder="Digite seu endereço de entrega">
+  <div style="padding: 15px; display: flex; flex-direction: column; gap: 10px;">
+    <input type="text" id="endereco" placeholder="Digite seu endereço de entrega" style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px;">
 
-<br>
+    <a href="https://link.mercadopago.com.br/cozinhadamarcela" style="text-align: center; background: white; color: #333; border: 2px solid #ccc; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold;">💳 Pagar com Cartão</a>
+    <a id="btn-finalizar-whatsapp" style="text-align: center; background: #25D366; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer;">📲 Finalizar no WhatsApp</a>
+  </div>
+</section>
 
+<style>
+  #cart-items li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+  }
 
-<a href="https://link.mercadopago.com.br/cozinhadamarcela" class="btn-pagamento">💳 Pagar com Cartão de Crédito</a>
-<a id="btn-finalizar-whatsapp" class="btn-finalizar">📲 Finalizar Pedido pelo WhatsApp</a>
-</main>
+  #cart-items .controles {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  #cart-items button {
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+  }
+
+  #cart-items button:hover {
+    background-color: #ddd;
+  }
+</style>
+
 <script>
-let cart = [];
-
-function addToCart(name, price, description) {
-    let precoNumber = parseFloat(price.toString().replace(',', '.'));
-    let existingItem = cart.find(item => item.name === name);
-    if (existingItem) {
-        existingItem.quantity++;
-        existingItem.totalPrice = existingItem.quantity * precoNumber;
-    } else {
-        cart.push({ name, description, price: precoNumber, quantity: 1, totalPrice: precoNumber });
-    }
-    updateCart();
-}
-
 function updateCart() {
     let cartItems = document.getElementById('cart-items');
     let total = 0;
@@ -189,64 +256,19 @@ function updateCart() {
     cart.forEach(item => {
         let li = document.createElement('li');
         li.innerHTML = `
-            ${item.name} (${item.quantity}x) - R$ ${item.totalPrice.toFixed(2).replace('.', ',')}
-            <button onclick="alterarQuantidade('${item.name}', 1)">+</button>
-            <button onclick="alterarQuantidade('${item.name}', -1)">-</button>
+            <span>${item.name} (${item.quantity}x) - R$ ${item.totalPrice.toFixed(2).replace('.', ',')}</span>
+            <div class="controles">
+                <button onclick="alterarQuantidade('${item.name}', 1)">+</button>
+                <button onclick="alterarQuantidade('${item.name}', -1)">-</button>
+            </div>
         `;
         cartItems.appendChild(li);
         total += item.totalPrice;
     });
-    document.getElementById('total').textContent = total.toFixed(2).replace('.', ',');
+    document.getElementById('total').textContent = "R$ " + total.toFixed(2).replace('.', ',');
 }
-
-function alterarQuantidade(name, change) {
-    let item = cart.find(i => i.name === name);
-    if (item) {
-        item.quantity += change;
-        if (item.quantity <= 0) {
-            cart = cart.filter(i => i.name !== name);
-        } else {
-            item.totalPrice = item.quantity * item.price;
-        }
-        updateCart();
-    }
-}
-
-function gerarMensagemPedido() {
-    let endereco = document.getElementById('endereco').value.trim();
-    if (!endereco) {
-        alert("📍 Por favor, insira o endereço de entrega.");
-        return null;
-    }
-    let mensagem = "🍽️ *Pedido Cozinha da Marcela*%0A%0A";
-    let total = 0;
-    cart.forEach(item => {
-        mensagem += `• ${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}%0A`;
-        total += item.price * item.quantity;
-    });
-    mensagem += `%0A💰 *Total:* R$ ${total.toFixed(2).replace('.', ',')}`;
-    mensagem += `%0A📍 *Endereço:* ${endereco}`;
-    mensagem += `%0A%0A📎 Envie seu comprovante de pagamento aqui.`;
-    return mensagem;
-}
-
-document.getElementById("btn-finalizar-whatsapp").addEventListener("click", function () {
-    let mensagem = gerarMensagemPedido();
-    if (mensagem) {
-        let numeroWhatsApp = "5511942018395";
-        let url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
-        window.open(url, '_blank');
-    }
-});
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
 
