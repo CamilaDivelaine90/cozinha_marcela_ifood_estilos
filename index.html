@@ -1,344 +1,280 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cozinha da Marcela - Cardápio</title>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozinha da Marcela - Cardápio</title>
+  <style>
     body {
-        font-family: Arial, sans-serif;
-        background-color: #fff8f0;
-        color: #333;
-        margin: 0;
-        padding: 0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #fff8f0;
+      color: #333;
     }
 
-    h1 {
-        text-align: center;
-        padding: 15px;
-        color: #d35400;
+    /* Menu fixo */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #d35400;
+      color: white;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 12px 0;
+      z-index: 999;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    html {
+      scroll-behavior: smooth;
     }
 
-    /* Campo de busca */
-    #search {
-        display: block;
-        margin: 0 auto 20px auto;
-        padding: 10px;
-        width: 90%;
-        max-width: 400px;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
+    /* Cardápio */
+    #cardapio {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
     }
-
-    .dia-semana {
-        padding: 20px;
+    .item {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 15px;
+      margin-bottom: 15px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
     }
-
-    .dia-semana h2 {
-        border-left: 5px solid #d35400;
-        padding-left: 10px;
-        margin-bottom: 15px;
-        color: #d35400;
+    .item img {
+      width: 120px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 8px;
     }
-
-    .itens-dia {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
+    .item button {
+      background: #d35400;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
     }
-
-    .card {
-        background: white;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        flex: 1 1 calc(25% - 15px);
-        display: flex;
-        flex-direction: column;
-        min-width: 250px;
-    }
-
-    .card img {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-    }
-
-    .card-content {
-        padding: 10px;
-        flex-grow: 1;
-    }
-
-    .card-content h4 {
-        margin: 5px 0;
-        font-size: 18px;
-    }
-
-    .card-content p {
-        margin: 3px 0;
-        font-size: 14px;
-        color: #555;
-    }
-
-    .preco {
-        font-weight: bold;
-        font-size: 16px;
-        margin-top: 5px;
-    }
-
-    .btn-add {
-        background-color: #25D366;
-        color: white;
-        padding: 10px;
-        text-align: center;
-        border: none;
-        width: 100%;
-        cursor: pointer;
-        font-size: 16px;
-        transition: 0.3s;
-        border-radius: 0 0 10px 10px;
-    }
-
-    .btn-add:hover {
-        background-color: #1ebe5d;
-    }
-
-    @media (max-width: 768px) {
-        .card {
-            flex: 1 1 calc(50% - 15px);
-        }
-    }
-
-    @media (max-width: 480px) {
-        .card {
-            flex: 1 1 100%;
-        }
+    .item button:hover {
+      background: #b84300;
     }
 
     /* Carrinho */
+    #carrinho {
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    #carrinho header {
+      background-color: #d35400;
+      color: white;
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+    #cart-items {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
     #cart-items li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px;
-        border-bottom: 1px solid #eee;
-        font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
     }
-
     #cart-items .controles {
-        display: flex;
-        align-items: center;
-        gap: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-
     #cart-items button {
-        background-color: #f1f1f1;
-        border: none;
-        border-radius: 50%;
-        width: 26px;
-        height: 26px;
-        font-size: 16px;
-        cursor: pointer;
-        font-weight: bold;
-        line-height: 1;
-        text-align: center;
+      background-color: #f1f1f1;
+      border: none;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #cart-items button:hover {
+      background-color: #ddd;
+    }
+    #carrinho .total {
+      padding: 15px;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    #carrinho .acoes {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #carrinho .acoes input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    #carrinho .acoes a {
+      text-align: center;
+      background: #25D366;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    #carrinho .acoes a.cartao {
+      background: white;
+      color: #333;
+      border: 2px solid #ccc;
     }
 
-    #cart-items button:hover {
-        background-color: #ddd;
+    /* Contato */
+    #contato {
+      background: #d35400;
+      color: white;
+      padding: 30px;
+      text-align: center;
     }
-</style>
+  </style>
 </head>
 <body>
 
-<h1>🍽 Cardápio da Semana</h1>
-<input type="text" id="search" placeholder="🔍 Buscar prato ou descrição...">
+  <!-- MENU FIXO -->
+  <nav>
+    <a href="#cardapio">🍽 Cardápio</a>
+    <a href="#carrinho">🛒 Carrinho</a>
+    <a href="#contato">📞 Contato</a>
+  </nav>
+  <div style="height: 60px;"></div>
 
-<!-- SEGUNDA -->
-<section class="dia-semana">
-    <h2>Segunda-feira</h2>
-    <div class="itens-dia">
-        <div class="card">
-            <img src="1.png" alt="Batata Recheada Bacon e Requeijão Cremoso">
-            <div class="card-content">
-                <h4>Batata Recheada Bacon e Requeijão Cremoso</h4>
-                <p>Batata, mussarela, bacon, requeijão</p>
-                <p>1 unidade - aprox.: 400g</p>
-                <p class="preco">R$ 21,90</p>
-            </div>
-            <button class="btn-add" onclick="addToCart('Batata Recheada Bacon e Requeijão Cremoso', 21.90, '1 unidade - aprox.: 400g')">Adicionar</button>
-        </div>
-    </div>
-</section>
+  <!-- CARDÁPIO -->
+  <section id="cardapio">
+    <h2>Cardápio</h2>
 
-<!-- TERÇA -->
-<section class="dia-semana">
-    <h2>Terça-feira</h2>
-    <div class="itens-dia">
-        <div class="card">
-            <img src="3.png" alt="Kibe Assado">
-            <div class="card-content">
-                <h4>Kibe Assado</h4>
-                <p>Recheado com carne moída e especiarias</p>
-                <p>Porção individual - aprox.: 400g</p>
-                <p class="preco">R$ 24,90</p>
-            </div>
-            <button class="btn-add" onclick="addToCart('Kibe Assado', 24.90, 'Porção individual - aprox.: 400g')">Adicionar</button>
-        </div>
-    </div>
-</section>
-
-<!-- QUARTA -->
-<section class="dia-semana">
-    <h2>Quarta-feira</h2>
-    <div class="itens-dia">
-        <div class="card">
-            <img src="5.png" alt="Carne de Panela">
-            <div class="card-content">
-                <h4>Carne de Panela</h4>
-                <p>Com batata, cenoura e arroz</p>
-                <p>Porção individual - aprox.: 500g</p>
-                <p class="preco">R$ 24,90</p>
-            </div>
-            <button class="btn-add" onclick="addToCart('Carne de Panela', 24.90, 'Porção individual - aprox.: 500g')">Adicionar</button>
-        </div>
-    </div>
-</section>
-
-<!-- Quinta -->
-<section class="dia-semana">
-    <h2>Quinta-feira</h2>
-    <div class="itens-dia">
-        <div class="card">
-            <img src="6.png" alt="Panqueca de Carne">
-            <div class="card-content">
-                <h4>Panqueca de Carne</h4>
-                <p>2 unidades - aprox.: 500g</p>
-                <p class="preco">R$ 24,90</p>
-            </div>
-            <button class="btn-add" onclick="addToCart('Panqueca de Carne', 24.90, '2 unidades - aprox.: 500g')">Adicionar</button>
-        </div>
-    </div>
-</section>
-
-<!-- Sexta -->
-<section class="dia-semana">
-    <h2>Sexta-feira</h2>
-    <div class="itens-dia">
-        <div class="card">
-            <img src="9.png" alt="Strogonoff de Frango">
-            <div class="card-content">
-                <h4>Strogonoff de Frango</h4>
-                <p>Com arroz e batata palha</p>
-                <p>Aprox.: 500g</p>
-                <p class="preco">R$ 24,90</p>
-            </div>
-            <button class="btn-add" onclick="addToCart('Strogonoff de Frango', 24.90, 'Aprox.: 500g')">Adicionar</button>
-        </div>
+    <div class="item">
+      <img src="https://via.placeholder.com/120x90" alt="Prato 1">
+      <div>
+        <h3>Prato 1</h3>
+        <p>Descrição do prato</p>
+        <strong>R$ 25,00</strong><br>
+        <button onclick="addToCart('Prato 1', 25, 'Descrição do prato')">Adicionar</button>
+      </div>
     </div>
 
-<!-- CARRINHO -->
-<section id="carrinho" style="max-width: 600px; margin: 30px auto; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); overflow: hidden;">
-  <header style="background-color: #d35400; color: white; padding: 15px; font-size: 20px; font-weight: bold; text-align: center;">
-    🛒 Carrinho de Compras
-  </header>
+    <div class="item">
+      <img src="https://via.placeholder.com/120x90" alt="Prato 2">
+      <div>
+        <h3>Prato 2</h3>
+        <p>Descrição do prato</p>
+        <strong>R$ 30,00</strong><br>
+        <button onclick="addToCart('Prato 2', 30, 'Descrição do prato')">Adicionar</button>
+      </div>
+    </div>
+  </section>
 
-  <ul id="cart-items"></ul>
+  <!-- CARRINHO -->
+  <section id="carrinho">
+    <header>🛒 Carrinho de Compras</header>
+    <ul id="cart-items"></ul>
+    <div class="total">
+      <span>Total:</span>
+      <span id="total">R$ 0,00</span>
+    </div>
+    <div class="acoes">
+      <input type="text" id="endereco" placeholder="Digite seu endereço de entrega">
+      <a href="https://link.mercadopago.com.br/cozinhadamarcela" class="cartao">💳 Pagar com Cartão</a>
+      <a id="btn-finalizar-whatsapp">📲 Finalizar no WhatsApp</a>
+    </div>
+  </section>
 
-  <div style="padding: 15px; border-top: 1px solid #eee; display: flex; justify-content: space-between; font-size: 18px; font-weight: bold;">
-    <span>Total:</span>
-    <span id="total">R$ 0,00</span>
-  </div>
+  <!-- CONTATO -->
+  <section id="contato">
+    <h2>Entre em Contato</h2>
+    <p>WhatsApp: (XX) XXXX-XXXX</p>
+    <p>Instagram: @cozinhadamarcela</p>
+  </section>
 
-  <div style="padding: 15px; display: flex; flex-direction: column; gap: 10px;">
-    <input type="text" id="endereco" placeholder="Digite seu endereço de entrega" style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px;">
-    <a href="https://link.mercadopago.com.br/cozinhadamarcela" style="text-align: center; background: white; color: #333; border: 2px solid #ccc; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold;">💳 Pagar com Cartão</a>
-    <a id="btn-finalizar-whatsapp" style="text-align: center; background: #25D366; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer;">📲 Finalizar no WhatsApp</a>
-  </div>
-</section>
+  <script>
+    let cart = [];
 
-<script>
-let cart = [];
-
-// Função para adicionar ao carrinho
-function addToCart(name, price, details) {
-    let item = cart.find(i => i.name === name);
-    if (item) {
-        item.quantity++;
-        item.totalPrice += price;
-    } else {
-        cart.push({ name, price, details, quantity: 1, totalPrice: price });
+    function addToCart(name, price, description) {
+      let precoNumber = parseFloat(price);
+      let existingItem = cart.find(item => item.name === name);
+      if (existingItem) {
+        existingItem.quantity++;
+        existingItem.totalPrice = existingItem.quantity * precoNumber;
+      } else {
+        cart.push({
+          name,
+          description,
+          price: precoNumber,
+          quantity: 1,
+          totalPrice: precoNumber
+        });
+      }
+      updateCart();
     }
-    updateCart();
-}
 
-// Atualizar exibição do carrinho
-function updateCart() {
-    let cartItems = document.getElementById('cart-items');
-    let total = 0;
-    cartItems.innerHTML = '';
-    cart.forEach(item => {
+    function alterarQuantidade(name, delta) {
+      let item = cart.find(i => i.name === name);
+      if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+          cart = cart.filter(i => i.name !== name);
+        } else {
+          item.totalPrice = item.quantity * item.price;
+        }
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      let cartItems = document.getElementById('cart-items');
+      let total = 0;
+      cartItems.innerHTML = '';
+      cart.forEach(item => {
         let li = document.createElement('li');
         li.innerHTML = `
-            <span>${item.name} (${item.quantity}x) - R$ ${item.totalPrice.toFixed(2).replace('.', ',')}</span>
-            <div class="controles">
-                <button onclick="alterarQuantidade('${item.name}', 1)">+</button>
-                <button onclick="alterarQuantidade('${item.name}', -1)">-</button>
-            </div>
+          <span>${item.name} (${item.quantity}x) - R$ ${item.totalPrice.toFixed(2).replace('.', ',')}</span>
+          <div class="controles">
+            <button onclick="alterarQuantidade('${item.name}', 1)">+</button>
+            <button onclick="alterarQuantidade('${item.name}', -1)">-</button>
+          </div>
         `;
         cartItems.appendChild(li);
         total += item.totalPrice;
-    });
-    document.getElementById('total').textContent = "R$ " + total.toFixed(2).replace('.', ',');
-}
-
-// Alterar quantidade de um item no carrinho
-function alterarQuantidade(name, delta) {
-    let item = cart.find(i => i.name === name);
-    if (item) {
-        item.quantity += delta;
-        item.totalPrice += delta * item.price;
-        if (item.quantity <= 0) {
-            cart = cart.filter(i => i.name !== name);
-        }
+      });
+      document.getElementById('total').textContent = "R$ " + total.toFixed(2).replace('.', ',');
     }
-    updateCart();
-}
-
-// Busca de pratos
-document.getElementById('search').addEventListener('input', function () {
-    let term = this.value.toLowerCase();
-    document.querySelectorAll('.card').forEach(card => {
-        let text = card.innerText.toLowerCase();
-        card.style.display = text.includes(term) ? '' : 'none';
-    });
-});
-
-// Finalizar no WhatsApp
-document.getElementById('btn-finalizar-whatsapp').addEventListener('click', function () {
-    let endereco = document.getElementById('endereco').value;
-    if (!endereco) {
-        alert('Por favor, informe seu endereço.');
-        return;
-    }
-    if (cart.length === 0) {
-        alert('Seu carrinho está vazio.');
-        return;
-    }
-    let mensagem = "📦 *Resumo do Pedido:*\n\n";
-    cart.forEach(item => {
-        mensagem += `• ${item.name} (${item.quantity}x) - R$ ${item.totalPrice.toFixed(2).replace('.', ',')}\n`;
-    });
-    let total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
-    mensagem += `\n💰 *Total:* R$ ${total.toFixed(2).replace('.', ',')}`;
-    mensagem += `\n📍 *Endereço:* ${endereco}`;
-    
-    let telefone = "5511942018395"; // Insira o número do WhatsApp com DDD e código do país
-    let url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
-    window.open(url, '_blank');
-});
-</script>
+  </script>
 
 </body>
 </html>
