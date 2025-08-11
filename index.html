@@ -1,280 +1,340 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cozinha da Marcela - Cardápio</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #fff8f0;
-      color: #333;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cozinha da Marcela — Cardápio</title>
+<style>
+  :root{
+    --primary:#d35400;
+    --accent:#25D366;
+    --bg:#fff8f0;
+    --card:#fff;
+    --muted:#666;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:#222;
+    -webkit-font-smoothing:antialiased;
+  }
 
-    /* Menu fixo */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: #d35400;
-      color: white;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 12px 0;
-      z-index: 999;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
+  /* Top menu */
+  nav{
+    position:fixed;top:0;left:0;width:100%;z-index:1000;
+    background:var(--primary);color:#fff;display:flex;justify-content:center;padding:12px 10px;gap:18px;box-shadow:0 2px 6px rgba(0,0,0,.15)
+  }
+  nav a{color:#fff;text-decoration:none;font-weight:700}
+  .spacer{height:64px}
 
-    /* Cardápio */
-    #cardapio {
-      max-width: 1000px;
-      margin: auto;
-      padding: 20px;
-    }
-    .item {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding: 15px;
-      margin-bottom: 15px;
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .item img {
-      width: 120px;
-      height: 90px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-    .item button {
-      background: #d35400;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .item button:hover {
-      background: #b84300;
-    }
+  /* Carousel (prato do dia) */
+  #pratos-do-dia{
+    max-width:1000px;margin:18px auto;padding:18px;border-radius:12px;overflow:hidden;
+    position:relative;
+    background:linear-gradient(90deg,#ff8c42,#ff5c33);
+    color:#fff;
+    box-shadow:0 6px 18px rgba(0,0,0,.12);
+  }
+  .carousel-wrap{display:flex;transition:transform .5s ease;width:200%}
+  .slide{
+    width:100%;flex:0 0 100%;display:flex;gap:18px;align-items:center;justify-content:space-between;
+    padding:18px;
+  }
+  .slide .info{flex:1;padding-right:12px}
+  .slide h3{margin:0 0 8px;font-size:22px}
+  .slide p{margin:0 0 12px;color:rgba(255,255,255,.95)}
+  .slide img{width:180px;height:120px;object-fit:cover;border-radius:10px;border:4px solid rgba(255,255,255,.12)}
+  .carousel-controls{position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 12px}
+  .ctrl-btn{background:rgba(0,0,0,.25);border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:20px}
+  .dotbar{display:flex;gap:8px;justify-content:center;margin-top:12px}
+  .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.45);cursor:pointer}
+  .dot.active{background:#fff}
 
-    /* Carrinho */
-    #carrinho {
-      max-width: 600px;
-      margin: 30px auto;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    #carrinho header {
-      background-color: #d35400;
-      color: white;
-      padding: 15px;
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
-    #cart-items {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    #cart-items li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
-    }
-    #cart-items .controles {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    #cart-items button {
-      background-color: #f1f1f1;
-      border: none;
-      border-radius: 50%;
-      width: 26px;
-      height: 26px;
-      font-size: 16px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    #cart-items button:hover {
-      background-color: #ddd;
-    }
-    #carrinho .total {
-      padding: 15px;
-      border-top: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    #carrinho .acoes {
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    #carrinho .acoes input {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-    #carrinho .acoes a {
-      text-align: center;
-      background: #25D366;
-      color: white;
-      padding: 12px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    #carrinho .acoes a.cartao {
-      background: white;
-      color: #333;
-      border: 2px solid #ccc;
-    }
+  /* Cardápio & busca */
+  #cardapio{max-width:1000px;margin:18px auto;padding:0 16px 30px}
+  #search{display:block;margin:0 auto 14px auto;padding:10px;width:100%;max-width:420px;border-radius:10px;border:1px solid #ddd;font-size:15px}
+  .lista{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .card{
+    background:var(--card);border-radius:12px;padding:10px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 4px 12px rgba(0,0,0,.06)
+  }
+  .card img{width:110px;height:90px;object-fit:cover;border-radius:8px}
+  .meta h4{margin:0 0 6px;font-size:16px}
+  .meta p{margin:0;color:var(--muted);font-size:14px}
+  .meta .price{margin-top:8px;font-weight:700}
+  .meta button{margin-top:10px;background:var(--primary);border:none;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer}
+  .meta button:hover{background:#b84300}
 
-    /* Contato */
-    #contato {
-      background: #d35400;
-      color: white;
-      padding: 30px;
-      text-align: center;
-    }
-  </style>
+  /* Carrinho */
+  #carrinho{max-width:640px;margin:20px auto 60px;padding:0;border-radius:12px;background:var(--card);box-shadow:0 6px 18px rgba(0,0,0,.06);overflow:hidden}
+  #carrinho header{background:var(--primary);color:#fff;padding:14px;font-weight:700;text-align:center}
+  #cart-items{list-style:none;margin:0;padding:0}
+  #cart-items li{display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid #f1f1f1}
+  .controles{display:flex;gap:8px;align-items:center}
+  .qty-btn{width:30px;height:30px;border-radius:6px;border:1px solid #e6e6e6;background:#fafafa;cursor:pointer}
+  .total{display:flex;justify-content:space-between;padding:14px;font-weight:700;border-top:1px solid #f1f1f1}
+  .acoes{padding:14px;display:flex;flex-direction:column;gap:10px}
+  .acoes input{padding:10px;border-radius:8px;border:1px solid #ddd}
+  .acoes .pay{display:flex;gap:10px}
+  .acoes a.btn{flex:1;text-align:center;padding:12px;border-radius:8px;text-decoration:none;color:#fff;font-weight:700}
+  .btn-card{background:#fff;color:#333;border:2px solid #ddd}
+  .btn-wpp{background:var(--accent)}
+
+  /* Contato */
+  #contato{max-width:1000px;margin:30px auto 80px;padding:24px;text-align:center;background:transparent}
+
+  /* Responsive tweaks */
+  @media (max-width:700px){
+    .slide{flex-direction:column;align-items:flex-start}
+    .slide img{width:100%;height:180px}
+    nav{padding:10px 8px}
+  }
+</style>
 </head>
 <body>
 
-  <!-- MENU FIXO -->
-  <nav>
-    <a href="#cardapio">🍽 Cardápio</a>
-    <a href="#carrinho">🛒 Carrinho</a>
-    <a href="#contato">📞 Contato</a>
-  </nav>
-  <div style="height: 60px;"></div>
+<!-- MENU -->
+<nav>
+  <a href="#cardapio">🍽 Cardápio</a>
+  <a href="#carrinho">🛒 Carrinho</a>
+  <a href="#contato">📞 Contato</a>
+</nav>
+<div class="spacer"></div>
 
-  <!-- CARDÁPIO -->
-  <section id="cardapio">
-    <h2>Cardápio</h2>
+<!-- CARROSSEL PRATOS DO DIA -->
+<section id="pratos-do-dia" aria-label="Pratos do dia">
+  <div style="max-width:1000px;margin:auto">
+    <h2 style="margin:0 0 8px 0;font-size:20px">🥘 Pratos do Dia</h2>
 
-    <div class="item">
-      <img src="1.1.png" alt="Prato 1">
-      <div>
-        <h3>Prato 1</h3>
-        <p>Descrição do prato</p>
-        <strong>R$ 25,00</strong><br>
-        <button onclick="addToCart('Prato 1', 25, 'Descrição do prato')">Adicionar</button>
-      </div>
-    </div>
-
-    <div class="item">
-      <img src="2.png" alt="Prato 2">
-      <div>
-        <h3>Prato 2</h3>
-        <p>Descrição do prato</p>
-        <strong>R$ 30,00</strong><br>
-        <button onclick="addToCart('Prato 2', 30, 'Descrição do prato')">Adicionar</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- CARRINHO -->
-  <section id="carrinho">
-    <header>🛒 Carrinho de Compras</header>
-    <ul id="cart-items"></ul>
-    <div class="total">
-      <span>Total:</span>
-      <span id="total">R$ 0,00</span>
-    </div>
-    <div class="acoes">
-      <input type="text" id="endereco" placeholder="Digite seu endereço de entrega">
-      <a href="https://link.mercadopago.com.br/cozinhadamarcela" class="cartao">💳 Pagar com Cartão</a>
-      <a id="btn-finalizar-whatsapp">📲 Finalizar no WhatsApp</a>
-    </div>
-  </section>
-
-  <!-- CONTATO -->
-  <section id="contato">
-    <h2>Entre em Contato</h2>
-    <p>WhatsApp: (XX) XXXX-XXXX</p>
-    <p>Instagram: @cozinhadamarcela</p>
-  </section>
-
-  <script>
-    let cart = [];
-
-    function addToCart(name, price, description) {
-      let precoNumber = parseFloat(price);
-      let existingItem = cart.find(item => item.name === name);
-      if (existingItem) {
-        existingItem.quantity++;
-        existingItem.totalPrice = existingItem.quantity * precoNumber;
-      } else {
-        cart.push({
-          name,
-          description,
-          price: precoNumber,
-          quantity: 1,
-          totalPrice: precoNumber
-        });
-      }
-      updateCart();
-    }
-
-    function alterarQuantidade(name, delta) {
-      let item = cart.find(i => i.name === name);
-      if (item) {
-        item.quantity += delta;
-        if (item.quantity <= 0) {
-          cart = cart.filter(i => i.name !== name);
-        } else {
-          item.totalPrice = item.quantity * item.price;
-        }
-      }
-      updateCart();
-    }
-
-    function updateCart() {
-      let cartItems = document.getElementById('cart-items');
-      let total = 0;
-      cartItems.innerHTML = '';
-      cart.forEach(item => {
-        let li = document.createElement('li');
-        li.innerHTML = `
-          <span>${item.name} (${item.quantity}x) - R$ ${item.totalPrice.toFixed(2).replace('.', ',')}</span>
-          <div class="controles">
-            <button onclick="alterarQuantidade('${item.name}', 1)">+</button>
-            <button onclick="alterarQuantidade('${item.name}', -1)">-</button>
+    <div class="carousel-viewport" style="overflow:hidden;border-radius:10px">
+      <div class="carousel-wrap">
+        <!-- Slide 1: Kibe Assado -->
+        <div class="slide" data-name="Kibe Assado" data-price="24.9">
+          <div class="info">
+            <h3>Kibe Assado — R$ 24,90</h3>
+            <p>Acompanha salada fresca e molho especial. Porção individual (~400g).</p>
+            <button onclick="addToCart('Kibe Assado',24.90,'Acompanha salada e molho especial')">🛒 Adicionar ao Carrinho</button>
           </div>
-        `;
-        cartItems.appendChild(li);
-        total += item.totalPrice;
-      });
-      document.getElementById('total').textContent = "R$ " + total.toFixed(2).replace('.', ',');
-    }
-  </script>
+          <img src="https://source.unsplash.com/featured/?kibbeh,kibe,kibbe" alt="Kibe Assado">
+        </div>
 
+        <!-- Slide 2: Kafta -->
+        <div class="slide" data-name="Kafta" data-price="26.9">
+          <div class="info">
+            <h3>Kafta — R$ 26,90</h3>
+            <p>Kafta grelhada, acompanha arroz sírio e homus. 3 unidades (~400g).</p>
+            <button onclick="addToCart('Kafta',26.90,'Acompanha arroz sírio e homus')">🛒 Adicionar ao Carrinho</button>
+          </div>
+          <img src="https://source.unsplash.com/featured/?kafta,kafta-meat,kafta-dish" alt="Kafta">
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-controls">
+      <button class="ctrl-btn" onclick="prevSlide()" aria-label="Anterior">❮</button>
+      <button class="ctrl-btn" onclick="nextSlide()" aria-label="Próximo">❯</button>
+    </div>
+
+    <div class="dotbar" style="margin-top:10px">
+      <div class="dot active" onclick="goToSlide(0)"></div>
+      <div class="dot" onclick="goToSlide(1)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CARDÁPIO -->
+<section id="cardapio">
+  <input id="search" placeholder="🔍 Buscar prato ou descrição..." aria-label="Buscar pratos">
+
+  <h2 style="margin-top:12px">Cardápio da Semana</h2>
+  <div class="lista" id="lista">
+    <!-- Exemplo: repita/edite os itens conforme precisar -->
+    <div class="card" data-name="Batata Recheada Bacon e Requeijão Cremoso" data-desc="Batata, mussarela, bacon, requeijão" data-price="21.9">
+      <img src="https://source.unsplash.com/featured/?stuffed-potato" alt="Batata Recheada">
+      <div class="meta">
+        <h4>Batata Recheada Bacon e Requeijão Cremoso</h4>
+        <p>Batata, mussarela, bacon, requeijão — 1 unidade (~400g)</p>
+        <div class="price">R$ 21,90</div>
+        <button onclick="addToCart('Batata Recheada Bacon e Requeijão Cremoso',21.90,'1 unidade - aprox. 400g')">Adicionar</button>
+      </div>
+    </div>
+
+    <div class="card" data-name="Kibe Assado" data-desc="Recheado com carne moída e especiarias" data-price="24.9">
+      <img src="https://source.unsplash.com/featured/?kibbeh" alt="Kibe Assado">
+      <div class="meta">
+        <h4>Kibe Assado</h4>
+        <p>Recheado com carne moída e especiarias — Porção individual (~400g)</p>
+        <div class="price">R$ 24,90</div>
+        <button onclick="addToCart('Kibe Assado',24.90,'Porção individual - aprox.: 400g')">Adicionar</button>
+      </div>
+    </div>
+
+    <div class="card" data-name="Carne de Panela" data-desc="Carne, batata, cenoura e arroz" data-price="24.9">
+      <img src="https://source.unsplash.com/featured/?pot-roast" alt="Carne de Panela">
+      <div class="meta">
+        <h4>Carne de Panela</h4>
+        <p>Com batata, cenoura e arroz — Porção individual (~500g)</p>
+        <div class="price">R$ 24,90</div>
+        <button onclick="addToCart('Carne de Panela',24.90,'Porção individual - aprox.: 500g')">Adicionar</button>
+      </div>
+    </div>
+
+    <div class="card" data-name="Panqueca de Carne" data-desc="Panqueca recheada com carne" data-price="24.9">
+      <img src="https://source.unsplash.com/featured/?meat-pancake,pancake" alt="Panqueca">
+      <div class="meta">
+        <h4>Panqueca de Carne</h4>
+        <p>2 unidades — aprox.: 500g</p>
+        <div class="price">R$ 24,90</div>
+        <button onclick="addToCart('Panqueca de Carne',24.90,'2 unidades - aprox.: 500g')">Adicionar</button>
+      </div>
+    </div>
+
+    <div class="card" data-name="Kafta" data-desc="Kafta de carne moída com temperos" data-price="26.9">
+      <img src="https://source.unsplash.com/featured/?kafta" alt="Kafta">
+      <div class="meta">
+        <h4>Kafta</h4>
+        <p>Kafta de carne moída com temperos especiais — 3 unidades (~400g)</p>
+        <div class="price">R$ 26,90</div>
+        <button onclick="addToCart('Kafta',26.90,'3 unidades - aprox.: 400g')">Adicionar</button>
+      </div>
+    </div>
+
+    <!-- adicione mais cards conforme necessário -->
+  </div>
+</section>
+
+<!-- CARRINHO -->
+<section id="carrinho">
+  <header>🛒 Carrinho de Compras</header>
+  <ul id="cart-items"></ul>
+  <div class="total"><span>Total:</span><span id="total">R$ 0,00</span></div>
+  <div class="acoes">
+    <input id="endereco" placeholder="Digite seu endereço de entrega (rua, nº, bairro)" />
+    <div style="display:flex;gap:10px">
+      <a class="btn btn-card" href="https://link.mercadopago.com.br/cozinhadamarcela" target="_blank">💳 Pagar com Cartão</a>
+      <a id="btn-finalizar-whatsapp" class="btn btn-wpp">📲 Finalizar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div style="max-width:1000px;margin:0 auto;padding:20px">
+    <h2>Contato</h2>
+    <p>📍 Endereço: Rua Exemplo, 123 — Cidade/UF</p>
+    <p>📞 WhatsApp: (11) 9XXXX-XXXX</p>
+    <p>Instagram: @cozinhadamarcela</p>
+  </div>
+</section>
+
+<script>
+/* ---------- Carousel ---------- */
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const wrap = document.querySelector('.carousel-wrap');
+const dots = document.querySelectorAll('.dot');
+
+function updateCarousel(){
+  wrap.style.transform = `translateX(-${currentSlide * 100}%)`;
+  dots.forEach((d,i)=> d.classList.toggle('active', i===currentSlide));
+}
+function nextSlide(){ currentSlide = (currentSlide+1) % slides.length; updateCarousel(); }
+function prevSlide(){ currentSlide = (currentSlide-1 + slides.length) % slides.length; updateCarousel(); }
+function goToSlide(i){ currentSlide = i % slides.length; updateCarousel(); }
+let carouselInterval = setInterval(nextSlide,5000);
+document.querySelectorAll('.dot').forEach((dot,i)=>dot.addEventListener('click',()=>{ clearInterval(carouselInterval); goToSlide(i); carouselInterval=setInterval(nextSlide,5000);}))
+
+/* ---------- Carrinho & Busca ---------- */
+let cart = [];
+
+function formatBR(value){
+  return value.toFixed(2).replace('.',',');
+}
+
+function addToCart(name, price, details=''){
+  price = Number(price);
+  const item = cart.find(x => x.name === name);
+  if(item){
+    item.quantity++;
+    item.total = item.quantity * item.price;
+  } else {
+    cart.push({name, price, details, quantity:1, total:price});
+  }
+  updateCart();
+}
+
+function alterarQuantidade(name, delta){
+  const item = cart.find(x => x.name === name);
+  if(!item) return;
+  item.quantity += delta;
+  if(item.quantity <= 0){
+    cart = cart.filter(x => x.name !== name);
+  } else {
+    item.total = item.quantity * item.price;
+  }
+  updateCart();
+}
+
+function updateCart(){
+  const ul = document.getElementById('cart-items');
+  ul.innerHTML = '';
+  let total = 0;
+  cart.forEach(item=>{
+    total += item.total;
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <div style="flex:1">${item.name} <small style="color:#888">(${item.details})</small></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="min-width:90px;text-align:right">R$ ${formatBR(item.total)}</span>
+        <div class="controles">
+          <button class="qty-btn" onclick="alterarQuantidade('${item.name}',1)">+</button>
+          <button class="qty-btn" onclick="alterarQuantidade('${item.name}',-1)">-</button>
+        </div>
+      </div>
+    `;
+    ul.appendChild(li);
+  });
+  document.getElementById('total').textContent = 'R$ ' + formatBR(total);
+}
+
+/* Busca por nome/descrição */
+document.getElementById('search').addEventListener('input', function(){
+  const term = this.value.trim().toLowerCase();
+  document.querySelectorAll('#lista .card').forEach(card=>{
+    const name = card.dataset.name.toLowerCase();
+    const desc = card.dataset.desc.toLowerCase();
+    card.style.display = (name.includes(term) || desc.includes(term)) ? '' : 'none';
+  });
+});
+
+/* Finalizar via WhatsApp */
+document.getElementById('btn-finalizar-whatsapp').addEventListener('click', function(){
+  const endereco = document.getElementById('endereco').value.trim();
+  if(cart.length === 0){ alert('Seu carrinho está vazio.'); return; }
+  if(!endereco){ alert('Por favor, informe o endereço de entrega.'); document.getElementById('endereco').focus(); return; }
+
+  let mensagem = '🍽️ *Pedido - Cozinha da Marcela*%0A%0A';
+  cart.forEach(i=>{
+    mensagem += `${i.quantity}x ${i.name} - R$ ${formatBR(i.total)}%0A`;
+  });
+  const total = cart.reduce((s,i)=>s+i.total,0);
+  mensagem += `%0A*Total:* R$ ${formatBR(total)}%0A`;
+  mensagem += `%0A*Endereço:* ${endereco}%0A`;
+  mensagem += `%0APor favor, envie o comprovante de pagamento aqui (se aplicável).`;
+
+  // Substitua pelo seu número com código do país (ex.: 5511999999999)
+  const telefoneWhatsApp = '5511999999999';
+  const url = `https://wa.me/${telefoneWhatsApp}?text=${mensagem}`;
+  window.open(url, '_blank');
+});
+
+/* Accessibility: pause carousel on hover */
+document.getElementById('pratos-do-dia').addEventListener('mouseenter',()=>clearInterval(carouselInterval));
+document.getElementById('pratos-do-dia').addEventListener('mouseleave',()=>carouselInterval=setInterval(nextSlide,5000));
+
+/* Inicializa layout do carrossel */
+updateCarousel();
+</script>
 </body>
 </html>
